@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class TheLargestNumber1_1_1 {
+public class TheLargestNumber1_0_0 {
 
     public static void main(String[] args) {
 
