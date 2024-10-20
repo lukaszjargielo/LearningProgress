@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
-public class Main {
+public class DescendingNumbers2_1_0 {
     public static void main(String[] args) {
 
-        
+        for (; ; ) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Enter 3 integers:");
@@ -24,8 +24,7 @@ public class Main {
                     between = num3;
                     min = num2;
                 }
-            }
-            if (num2 >= num1 && num2 >= num3) {
+            } else if (num2 >= num1 && num2 >= num3) {
                 max = num2;
                 if (num1 > num3) {
                     between = num1;
@@ -34,8 +33,7 @@ public class Main {
                     between = num3;
                     min = num1;
                 }
-            }
-            if (num3 >= num1 && num3 >= num2) {
+            } else if (num3 >= num1 && num3 >= num2) {
                 max = num3;
                 if (num2 > num1) {
                     between = num2;
@@ -46,6 +44,6 @@ public class Main {
                 }
             }
             System.out.println("Descending order of entered numbers: " + max + " " + between + " " + min);
-
+        }
     }
 }
