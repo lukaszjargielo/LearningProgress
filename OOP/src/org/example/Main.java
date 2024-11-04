@@ -3,24 +3,25 @@ package org.example;
 public class Main {
     public static void main(String[] args) {
 
-        User user1 = new User();
-        User user2 = new User();
+        Car car1 = new Car("Audi", "A7", "silver");
+        Car car2 = new Car("Suzuki", "Swift", 2024, "red");
 
-        user1.name = "£ukasz";
-        user1.age = 36;
-        user1.isActive = true;
+        System.out.println(car1.make);
+        System.out.println(car1.model);
+        System.out.println(car1.year);
+        System.out.println(car1.color);
 
-        user2.name = "Natalia";
-        user2.age = 35;
-        user2.isActive = false;
+        System.out.println(car2.make);
+        System.out.println(car2.model);
+        System.out.println(car2.year);
+        System.out.println(car2.color);
 
-        System.out.println(user1);
-        System.out.println(user2);
+        car2.color = "total rust";
 
-        System.out.println(user1.name);
-        System.out.println(user1.age);
-        System.out.println(user1.isActive);
-        user1.hello();
+        System.out.println(car2.make);
+        System.out.println(car2.model);
+        System.out.println(car2.year);
+        System.out.println(car2.color);
 
         
     }
