@@ -1,4 +1,4 @@
-package pl.futurejavacode;
+package pl.futurejavacode.Car;
 
 public class Car {
     private final String make;

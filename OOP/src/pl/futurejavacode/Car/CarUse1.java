@@ -1,4 +1,4 @@
-package pl.futurejavacode;
+package pl.futurejavacode.Car;
 
 import java.util.Scanner;
 
