@@ -9,6 +9,8 @@ public class Main {
         }
 
         RequestHandler requestHandler = new RequestHandler();
+        System.out.println(requestHandler.getClass());
+        System.out.println(requestHandler.toString());
         System.out.println(requestHandler.handleRequest());
 
         StatusCode statusCode = requestHandler.handleRequest();
@@ -20,5 +22,8 @@ public class Main {
         for (StatusCode value : values) {
             System.out.println(value);
         }
+
+        System.out.println(statusCode.getClass());
+        System.out.println(statusCode.toString());
     }
 }
