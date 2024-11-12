@@ -1,5 +1,8 @@
 package pl.futurejavacode.oopExercises;
 
+import java.text.Normalizer;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 //        System.out.println(Calculator.add(1,2));
@@ -36,29 +39,32 @@ public class Main {
 //        System.out.println(rectangleAB.equals(rectangleCD));
 //        System.out.println(rectangleA.equals(rectangleF));
 
-        Rectangle3 rectangleAB = new Rectangle3(2, 5);
-        Rectangle3 rectangleBA = new Rectangle3(5, 2);
+//        Rectangle3 rectangleAB = new Rectangle3(2, 5);
+//        Rectangle3 rectangleBA = new Rectangle3(5, 2);
+//
+//        Rectangle3 rectangleCD = new Rectangle3(2.0, 5.0);
+//        Rectangle3 rectangleDC = new Rectangle3(5.0, 2.0);
+//
+//        Rectangle3 rectangleEF = new Rectangle3(3, 8);
+//        Rectangle3 rectangleGH = new Rectangle3(3, 3);
+//
+//        Rectangle3 rectangleA = new Rectangle3(2);
+//        Rectangle3 rectangleC = new Rectangle3(2.0);
+//
+//        Rectangle3 rectangleF = new Rectangle3(7);
+//
+//        System.out.println(rectangleA.isSquare());
+//        System.out.println(rectangleAB.isSquare());
+//        System.out.println(rectangleGH.isSquare());
+//
+//        System.out.println();
+//
+//        System.out.println(rectangleAB.equals(rectangleCD));
+//        System.out.println(rectangleA.equals(rectangleF));
+//        System.out.println(rectangleAB.equals(rectangleCD));
+//        System.out.println(rectangleAB.equals(rectangleDC));
 
-        Rectangle3 rectangleCD = new Rectangle3(2.0, 5.0);
-        Rectangle3 rectangleDC = new Rectangle3(5.0, 2.0);
+        MonthPerYearUse.monthAndItsDays();
 
-        Rectangle3 rectangleEF = new Rectangle3(3, 8);
-        Rectangle3 rectangleGH = new Rectangle3(3, 3);
-
-        Rectangle3 rectangleA = new Rectangle3(2);
-        Rectangle3 rectangleC = new Rectangle3(2.0);
-
-        Rectangle3 rectangleF = new Rectangle3(7);
-
-        System.out.println(rectangleA.isSquare());
-        System.out.println(rectangleAB.isSquare());
-        System.out.println(rectangleGH.isSquare());
-
-        System.out.println();
-
-        System.out.println(rectangleAB.equals(rectangleCD));
-        System.out.println(rectangleA.equals(rectangleF));
-        System.out.println(rectangleAB.equals(rectangleCD));
-        System.out.println(rectangleAB.equals(rectangleDC));
     }
 }
