@@ -25,8 +25,10 @@ public abstract class MonthPerYearUse {
                  SEPTEMBER,
                  OCTOBER,
                  NOVEMBER,
-                 DECEMBER ->
-                    System.out.println("Number of days in " + String.valueOf(monthsPerYear).toLowerCase() + ": " + monthsPerYear.getDaysPerMonth());
+                 DECEMBER -> {
+                System.out.println("Number of days in " + String.valueOf(monthsPerYear).toLowerCase() + ": " + monthsPerYear.getDaysPerMonth());
+                System.out.println("Number of days in " + monthsPerYear + ": " + monthsPerYear.getDaysPerMonth());
+            }
         }
     }
 }
