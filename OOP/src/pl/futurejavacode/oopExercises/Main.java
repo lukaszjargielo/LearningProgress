@@ -65,6 +65,7 @@ public class Main {
 //        System.out.println(rectangleAB.equals(rectangleDC));
 
         MonthPerYearUse.monthAndItsDays();
+        System.out.println(MonthsPerYear.valueOf("march".toUpperCase()));
 
     }
 }
