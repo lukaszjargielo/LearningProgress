@@ -27,7 +27,7 @@ public class Main {
                 }
             }
             try {
-                Files.write(pathOutput, namesStartWithA, StandardOpenOption.APPEND);
+                Files.write(pathOutput, namesStartWithA);
             } catch (IOException e) {
                 System.out.println("Something gone wrong during writing to a file.");
                 throw new RuntimeException(e);
