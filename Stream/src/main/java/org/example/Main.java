@@ -8,16 +8,13 @@ public class Main {
     public static void main(String[] args) {
         List<User> users = prepareData();
 
-//        users.stream().forEach(System.out::println);
-
-        List<User> newSortedList = users.stream()
+        List<String> newList = users.stream()
                 .filter(user -> !user.name().endsWith("a"))
                 .sorted(Comparator.comparing(User::age))
-                .takeWhile(user -> user.age() < 35)
+                .map(user -> user.age() + " , " + user.name())
                 .toList();
 
-        newSortedList.forEach(System.out::println);
-
+         newList.forEach(System.out::println);
     }
     private static List<User> prepareData() {
         List<User> users = new ArrayList<>();
