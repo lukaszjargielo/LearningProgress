@@ -13,8 +13,9 @@ public class Main {
         users.stream()
                 .filter(user -> !user.name().endsWith("a"))
                 .sorted(Comparator.comparing(User::age))
+                .takeWhile(user -> user.age() < 35)
                 .forEach(user ->
-            System.out.println(user.name() + ", " + user.age()));
+            System.out.println(user.name() + ", "    + user.age()));
 
 
     }
