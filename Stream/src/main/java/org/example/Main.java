@@ -8,13 +8,15 @@ public class Main {
     public static void main(String[] args) {
         List<User> users = prepareData();
 
-        List<String> newList = users.stream()
-                .filter(user -> !user.name().endsWith("a"))
-                .sorted(Comparator.comparing(User::age))
-                .map(user -> user.age() + " , " + user.name())
+        List<String> flatMapList = users.stream()
+                .sorted(Comparator.comparing(User::name))
+                .map(User::skills)
+                .flatMap(list -> list.stream())
                 .toList();
 
-         newList.forEach(System.out::println);
+        flatMapList.forEach(System.out::println);
+
+
     }
     private static List<User> prepareData() {
         List<User> users = new ArrayList<>();
