@@ -1,19 +1,21 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         List<User> users = prepareData();
 
-        users.stream().forEach(System.out::println);
+//        users.stream().forEach(System.out::println);
 
-        users.stream().forEach(user -> {
-            System.out.println(user.name());
-            System.out.println(user.age());
-            System.out.println();
-        });
+        users.stream()
+                .filter(user -> !user.name().endsWith("a"))
+                .sorted(Comparator.comparing(User::age))
+                .forEach(user ->
+            System.out.println(user.name() + ", " + user.age()));
+
 
     }
     private static List<User> prepareData() {
