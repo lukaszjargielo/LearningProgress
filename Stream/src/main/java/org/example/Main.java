@@ -1,30 +1,32 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        List<User> users = prepareData();
 
-        List<String> names = List.of("Kamil","Mariusz", "Dominik", "Paulina", "Kasia", "Asia");
-/*
-        int femaleCount = 0;
+        users.stream().forEach(System.out::println);
 
-        for(String name: names) {
-            if(name.endsWith("a")) {
-                femaleCount++;
-            }
-        }
-        System.out.println(femaleCount);
-*/
-        long femaleCount = names.stream()
-                .filter(name -> name.endsWith("a")).
-                count();
-        System.out.println(femaleCount);
+        users.stream().forEach(user -> {
+            System.out.println(user.name());
+            System.out.println(user.age());
+            System.out.println();
+        });
 
-        names.stream()
-                .filter(name -> name.endsWith("a"))
-                .forEach(System.out::println);
+    }
+    private static List<User> prepareData() {
+        List<User> users = new ArrayList<>();
 
-        names.forEach(System.out::println);
+        users.add(new User("Kamil", 35, List.of("Java", "Python", "JavaScript"), true));
+        users.add(new User("Mariusz", 30, List.of("Java", "C#", "C++"), true));
+        users.add(new User("Dominik", 20, List.of("Java", "Dart", "Python"), false));
+        users.add(new User("Rafał", 40, List.of("C", "C++", "C#"), true));
+        users.add(new User("Paulina", 31, List.of("Python", "JavaScript", "Rust"), true));
+        users.add(new User("Kasia", 30, List.of("PHP", "Haskell"), false));
+        users.add(new User("Asia", 25, List.of("Java", "Scala", "Kotlin", "Haskell", "Clojure"), true));
+
+        return users;
     }
 }
