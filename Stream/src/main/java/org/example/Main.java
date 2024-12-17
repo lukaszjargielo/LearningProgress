@@ -10,13 +10,13 @@ public class Main {
 
 //        users.stream().forEach(System.out::println);
 
-        users.stream()
+        List<User> newSortedList = users.stream()
                 .filter(user -> !user.name().endsWith("a"))
                 .sorted(Comparator.comparing(User::age))
                 .takeWhile(user -> user.age() < 35)
-                .forEach(user ->
-            System.out.println(user.name() + ", "    + user.age()));
+                .toList();
 
+        newSortedList.forEach(System.out::println);
 
     }
     private static List<User> prepareData() {
