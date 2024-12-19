@@ -9,14 +9,23 @@ public class Main {
         List<User> users = prepareData();
 
         List<String> flatMapList = users.stream()
-                .sorted(Comparator.comparing(User::name))
                 .map(User::skills)
                 .flatMap(list -> list.stream())
+                .distinct()
+                .sorted()
                 .toList();
 
         flatMapList.forEach(System.out::println);
+        System.out.println();
 
+        List<String> list2 = users.stream()
+                .map(User::skills)
+                .flatMap(list -> list.stream())
+                .distinct()
+                .sorted(Comparator.reverseOrder())
+                .toList();
 
+        list2.forEach(System.out::println);
     }
     private static List<User> prepareData() {
         List<User> users = new ArrayList<>();
