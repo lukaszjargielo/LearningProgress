@@ -23,17 +23,12 @@ public class Main {
         setOfSkills.forEach(System.out::println);
         System.out.println();
 
-        Country country1 = new Country("Poland", "Cracow");
-        Country country2 = new Country("Germany", "Berlin");
-        Country country3 = new Country("France", "Paris");
-        Country country4 = new Country("Poland", "Warsaw");
+        String  collectedElements = users.stream()
+                .map(User::skills)
+                .flatMap(Collection::stream)
+                .collect(Collectors.joining(", "));
 
-        List<Country> countries = List.of(country1, country2, country3);
-
-        Map<String, String> mapOfCountries = countries.stream()
-                .collect(Collectors.toMap(Country::name, Country::capital, (OldValue, newValue) -> newValue));
-
-        System.out.println(mapOfCountries.get("Poland"));
+        System.out.println(collectedElements);
 
     }
     private static List<User> prepareData() {
