@@ -2,19 +2,26 @@ package org.example;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
         List<User> users = prepareData();
 
-        List<String> names = List.of("Mariusz", "Kamil", "Janusz");
-        List<String> names2 = List.of("Marcin", "Karol");
+        int[] numbers = {1, 2, 8, 40, 75};
+        OptionalDouble average = Arrays.stream(numbers)
+                .average();
+        System.out.println(average.getAsDouble());
 
-        Stream.concat(names.stream(), names2.stream())
-                .filter(name -> name.startsWith("M"))
-                .forEach(System.out::println);
+        IntStream intStream = IntStream.of(1, 2, 4, 9, 19);
+        long counted = intStream.count();
+        System.out.println(counted);
 
+        DoubleStream.of(1.1, 1.2,1.3).forEach(System.out::println);
+
+        IntStream.rangeClosed(0,10).forEach(System.out::println);
     }
     private static List<User> prepareData() {
         List<User> users = new ArrayList<>();
