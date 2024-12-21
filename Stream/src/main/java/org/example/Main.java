@@ -10,18 +10,15 @@ public class Main {
     public static void main(String[] args) {
         List<User> users = prepareData();
 
-        int[] numbers = {1, 2, 8, 40, 75};
-        OptionalDouble average = Arrays.stream(numbers)
-                .average();
-        System.out.println(average.getAsDouble());
+        boolean anyClojure = users.stream()
+                .anyMatch(user -> user.skills().contains("Clojure"));
+        System.out.println(anyClojure);
 
-        IntStream intStream = IntStream.of(1, 2, 4, 9, 19);
-        long counted = intStream.count();
-        System.out.println(counted);
+        boolean noneGolang = users.stream().noneMatch(user -> user.skills().contains("Golang"));
+        System.out.println(noneGolang);
 
-        DoubleStream.of(1.1, 1.2,1.3).forEach(System.out::println);
-
-        IntStream.rangeClosed(0,10).forEach(System.out::println);
+        boolean ofAge = users.stream().allMatch(user -> user.age() >= 18);
+        System.out.println(ofAge);
     }
     private static List<User> prepareData() {
         List<User> users = new ArrayList<>();
