@@ -10,15 +10,11 @@ public class Main {
     public static void main(String[] args) {
         List<User> users = prepareData();
 
-        boolean anyClojure = users.stream()
-                .anyMatch(user -> user.skills().contains("Clojure"));
-        System.out.println(anyClojure);
+        Optional<User> any = users.stream().filter(user -> user.age() > 25).parallel().findAny();
+        System.out.println(any.get());
 
-        boolean noneGolang = users.stream().noneMatch(user -> user.skills().contains("Golang"));
-        System.out.println(noneGolang);
-
-        boolean ofAge = users.stream().allMatch(user -> user.age() >= 18);
-        System.out.println(ofAge);
+        Optional<User> first = users.stream().filter(user -> user.age() > 25).findFirst();
+        System.out.println(first.get());
     }
     private static List<User> prepareData() {
         List<User> users = new ArrayList<>();
