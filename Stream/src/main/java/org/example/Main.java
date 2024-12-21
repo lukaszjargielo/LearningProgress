@@ -2,19 +2,19 @@ package org.example;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
         List<User> users = prepareData();
 
-        Map<Integer, List<String>> collectedData = users.stream()
-                .map(User::name)
-                .collect(Collectors.groupingBy(String::length));
-        System.out.println(collectedData);
+        List<String> names = List.of("Mariusz", "Kamil", "Janusz");
+        List<String> names2 = List.of("Marcin", "Karol");
 
-        Map<Boolean, List<User>> collectedData2 = users.stream()
-                .collect(Collectors.partitioningBy(User::isActive));
-        System.out.println(collectedData2);
+        Stream.concat(names.stream(), names2.stream())
+                .filter(name -> name.startsWith("M"))
+                .forEach(System.out::println);
+
     }
     private static List<User> prepareData() {
         List<User> users = new ArrayList<>();
