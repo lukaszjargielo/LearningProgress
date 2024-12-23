@@ -5,5 +5,7 @@ public class Main {
 
         Mouse mouse = new Mouse();
         Keyboard keyboard = new Keyboard();
+
+        System.out.println(USBDevice.getUSBVersion());
     }
 }

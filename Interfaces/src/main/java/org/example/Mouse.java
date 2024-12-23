@@ -16,7 +16,7 @@ public class Mouse implements USBDevice, Powerable{
         return "This is a mouse.";
     }
 
-    @Override
+     @Override
     public String getVersion() {
         return USBDevice.super.getVersion();
     }
