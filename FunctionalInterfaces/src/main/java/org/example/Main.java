@@ -11,12 +11,7 @@ public class Main {
             }
         });
 
-        user.greet(new Greeter() {
-            @Override
-            public void greet(String name) {
-                System.out.println("Hi " + name);
-            }
-        });
+        user.greet(name -> System.out.println("Hi " + name));
 
         Thread t1 = new Thread(new Runnable() {
             @Override
@@ -25,12 +20,7 @@ public class Main {
             }
         });
 
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("t2");
-            }
-        });
+        Thread t2 = new Thread(() -> System.out.println("t2"));
 
         Thread t3 = new Thread(new Runnable() {
             @Override
@@ -42,5 +32,10 @@ public class Main {
         t1.start();
         t2.start();
         t3.start();
+
+        MyNumber myNum;
+
+        myNum = () -> 123.45;
+        System.out.println("Constant value: " + myNum.getValue());
     }
 }
