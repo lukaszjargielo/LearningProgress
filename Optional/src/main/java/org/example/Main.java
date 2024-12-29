@@ -15,7 +15,7 @@ public class Main {
 
         if (computer2.getDrive() != null) {
             if (computer2.getDrive().getName() != null) {
-                System.out.println(computer2.getDrive().getName().toUpperCase());
+                System.out.println(computer2.getDrive().getName().toUpperCase(q));
             }
         }
     }
