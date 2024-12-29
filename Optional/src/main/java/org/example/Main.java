@@ -27,8 +27,16 @@ public class Main {
             }
         }
 
+        String name = computer.getDrive()
+                .flatMap(Drive::getName)
+                .orElse("Default drive");
 
+        System.out.println(name);
 
+        String name2 = computer2.getDrive()
+                .flatMap(Drive::getName)
+                .orElse("Default drive");
+        System.out.println(name2);
 
 
     }
