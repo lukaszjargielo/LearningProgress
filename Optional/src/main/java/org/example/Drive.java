@@ -1,20 +1,22 @@
 package org.example;
 
+import java.util.Optional;
+
 public class Drive {
-    private String name;
+    private Optional<String> name;
     private final int sizeInTerabytes;
 
     public Drive(String name, int sizeInTerabytes) {
-        this.name = name;
+        this.name = Optional.ofNullable(name);
         this.sizeInTerabytes = sizeInTerabytes;
     }
 
-    public String getName() {
+    public Optional<String> getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = Optional.ofNullable(name);
     }
 
     public int getSizeInTerabytes() {
