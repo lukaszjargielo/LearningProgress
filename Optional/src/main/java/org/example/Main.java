@@ -38,6 +38,9 @@ public class Main {
                 .orElse("Default drive");
         System.out.println(name2);
 
+        computer2.getDrive()
+                .flatMap(Drive::getName)
+                .orElseThrow(() -> new RuntimeException("Something contains null"));
 
     }
 }
