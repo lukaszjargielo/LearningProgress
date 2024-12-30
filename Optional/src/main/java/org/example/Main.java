@@ -38,9 +38,26 @@ public class Main {
                 .orElse("Default drive");
         System.out.println(name2);
 
-        computer2.getDrive()
-                .flatMap(Drive::getName)
-                .orElseThrow(() -> new RuntimeException("Something contains null"));
+//        computer2.getDrive()
+//                .flatMap(Drive::getName)
+//                .orElseThrow(() -> new RuntimeException("Something contains null"));
 
+        String returnedString = computer2.getDrive()
+                .flatMap(Drive::getName)
+                .orElse(getDefault());
+
+        System.out.println(returnedString);
+
+        String returnedString2 = computer.getDrive()
+                .flatMap(Drive::getName)
+                .orElseGet(() -> getDefault());
+
+        System.out.println(returnedString2);
     }
+
+    private static String getDefault() {
+        System.out.println("This text will always appear.");
+        return "Anything";
+    }
+
 }
