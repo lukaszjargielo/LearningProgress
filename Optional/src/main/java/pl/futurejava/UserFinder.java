@@ -2,6 +2,7 @@ package pl.futurejava;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserFinder {
     final List<User> users = new ArrayList<>();
@@ -16,12 +17,12 @@ public class UserFinder {
         users.add(user3);
     }
 
-    public User findUser(String name) {
+    public Optional<User> findUser(String name) {
         for (User user : users) {
             if (name.equals(user.getName())) {
-                return user;
+                return  Optional.of(user);
             }
         }
-        return null;
+        return Optional.empty();
     }
 }
