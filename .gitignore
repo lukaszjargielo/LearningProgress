@@ -10,6 +10,21 @@
 hs_err_pid*
 
 ##############################
+## Java trash
+##############################
+MethodReferences/.gitignore
+MethodReferences/pom.xml
+streamsExercises/.gitignore
+streamsExercises/pom.xml
+streamsExercises/src/main/java/org/example/Main.java
+pom.xml
+.gitignore
+../ListsAndArrays/.gitignore
+../ListsAndArrays/pom.xml
+../ListsAndArrays/src/main/java/org/example/Main.java
+ListsAndArrays/
+
+##############################
 ## Maven
 ##############################
 target/
