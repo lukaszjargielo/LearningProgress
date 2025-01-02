@@ -10,7 +10,6 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         List<String> listWithData = new ArrayList<>();
-        List<UserContent> usersContents = ParseFile.parseDataFromList(listWithData);
 
         Path path = Paths.get("src/main/resources/data.txt");
 
@@ -21,8 +20,8 @@ public class Main {
             e.printStackTrace();
         }
 
+        List<UserContent> usersContents = ParseFile.parseDataFromList(listWithData);
 
-    }
 
         System.out.println(users.get(1).getCommentDate());
     }
