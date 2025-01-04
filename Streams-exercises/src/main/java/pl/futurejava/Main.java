@@ -6,9 +6,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -31,7 +31,7 @@ public class Main {
 
 //Show comments in chronological order
 
-    /*      usersContents.stream()
+/*          usersContents.stream()
                 .sorted(Comparator.comparing(UserContent::getCommentDate))
                 .map(user -> user.getUsername() + " : " + user.getUserComment()
                         + " " + user.getCommentDate())
@@ -111,5 +111,82 @@ public class Main {
                 .filter(user -> user.getCommentDate().getMonth().equals(Month.OCTOBER))
                 .map(user -> user.getCommentDate() + " : " + user.getUserComment())
                 .forEach(System.out::println);*/
+
+//Show unique dates comments were posted.
+
+/*        usersContents.stream()
+                .collect(Collectors.groupingBy(e -> e, Collectors.counting()))  // Zliczamy wystąpienia
+                .entrySet().stream()
+                .filter(entry -> entry.getValue() == 1)  // Tylko te, które występują raz
+                .map(Map.Entry::getKey)  // Pobieramy klucze (liczby)
+                .toList();  // Zbieramy wyniki do listy*/
+
+
+
+       /* List<LocalDate> listWithDates = usersContents.stream()
+                .map(UserContent::getCommentDate)
+                .toList();
+
+        listWithDates.stream()
+                .filter(date -> Collections.frequency( listWithDates,date) == 1)
+                .forEach(System.out::println);
+
+        usersContents.stream()
+                .map(UserContent::getCommentDate)
+                .filter(date -> Collections.frequency(usersContents.stream().map(UserContent::getCommentDate).toList(), date) == 1)
+                .forEach(System.out::println);*/
+
+//Count the total number of likes for comments posted in November 2023.
+
+       /* int summedLikesInNovember = usersContents.stream()
+                .filter(userContent -> userContent.getCommentDate().getMonth().equals(Month.NOVEMBER))
+                .mapToInt(UserContent::getCommentLikes)
+                .sum();
+
+        System.out.println("Total likes for comments posted in November 2023: " + summedLikesInNovember);
+
+        usersContents.stream()
+                .map(userContent -> userContent.getCommentDate() + ": " + userContent.getCommentLikes())
+                .sorted()
+                .forEach(System.out::println);*/
+
+//Show unique names
+
+       /* Map<String, Long> collect = usersContents.stream()
+                .collect(Collectors.groupingBy(UserContent::getUsername, Collectors.counting()));
+
+        System.out.println(collect);*/
+
+        /*Map<String, Long> stringLongMap = usersContents.stream()
+                .collect(Collectors.groupingBy(UserContent::getUsername, Collectors.counting()));
+
+        stringLongMap.entrySet().stream()
+                .filter(e -> e.getValue() == 1)
+                .map(u -> u.getKey())
+                .forEach(System.out::println);*/
+
+        /*usersContents.stream()
+                .collect(Collectors.groupingBy(UserContent::getUsername, Collectors.counting()))
+                .entrySet().stream()
+                .filter(e -> e.getValue() == 1)
+                .map(Map.Entry::getKey)
+                .forEach(System.out::println);*/
+
+//Count the average length of comments.
+
+/*        Double averageLengthOfComment = usersContents.stream()
+                .collect(Collectors.averagingInt(u -> u.getUserComment().length()));
+
+        System.out.println("The average length of comments: " + averageLengthOfComment + " signs." );
+
+        Integer sumOfCommentSigns = usersContents.stream()
+                .collect(Collectors.summingInt(u -> u.getUserComment().length()));
+
+        System.out.println("Total signs amount is: " + sumOfCommentSigns);
+        System.out.println("It divided into 20 (number of comments) equals " + sumOfCommentSigns/20);*/
+
+//Count the average number of words per comment
+
+        usersContents.
     }
 }
