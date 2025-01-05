@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -259,6 +262,55 @@ public class Main {
                 .limit(5)
                 .forEach(System.out::println);*/
 
-//
+//Sort comments by user names in alphabetic order, then display first 5 comments.
+
+        /*usersContents.stream()
+                .sorted(Comparator.comparing(UserContent::getUsername))
+                .map(u -> u.getUsername() + " : " + u.getUserComment())
+                .limit(5)
+                .sorted()
+                .forEach(System.out::println);*/
+
+//Find all users who left comments that are longer than the average comment length
+
+        /*Double average = usersContents.stream()
+                .collect(Collectors.averagingInt(u -> u.getUserComment().length()));
+
+        System.out.println(average);
+
+        usersContents.stream()
+                .filter(u -> u.getUserComment().length() > average)
+                .map(UserContent::getUsername)
+                .forEach(System.out::println);*/
+
+        /*usersContents.stream()
+                .map(userContent -> userContent.getUserComment().length() + " " + userContent.getUsername())
+                .forEach(System.out::println);*/
+
+//Find the date with the most comments.
+
+        /*Map<LocalDate, Long> dateToCommentsNumber = usersContents.stream()
+                .collect(Collectors.groupingBy(UserContent::getCommentDate, Collectors.counting()));
+
+        System.out.println(dateToCommentsNumber);
+
+        LocalDate maxCommentDate = dateToCommentsNumber.entrySet().stream()
+                .sorted((entry1, entry2) -> Long.compare(entry2.getValue(), entry1.getValue()))
+                .findFirst()
+                .get()
+                .getKey();
+
+        System.out.println(maxCommentDate);*/
+
+        Map<LocalDate, Long> dateToCommentsNumber = usersContents.stream()
+                .collect(Collectors.groupingBy(UserContent::getCommentDate, Collectors.counting()));
+
+        LocalDate maxCommentDate = dateToCommentsNumber.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElseThrow(() -> new RuntimeException("Date not found"));
+
+        System.out.println(maxCommentDate);
+
     }
 }
