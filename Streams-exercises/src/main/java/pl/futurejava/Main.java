@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -187,6 +184,81 @@ public class Main {
 
 //Count the average number of words per comment
 
-        usersContents.
+        /*double average = usersContents.stream()
+                .map(UserContent::getUserComment).
+                mapToInt(value -> value.split(" ").length)
+                .average()
+                .getAsDouble();
+
+        System.out.println(average);*/
+
+
+        /*Double average = usersContents.stream()
+                .map(UserContent::getUserComment)
+                .mapToInt(comment -> comment.split("\\s+").length)
+                .average()
+                .getAsDouble();
+
+        System.out.println("Average words per comment " + average);*/
+
+ /*       Pattern pat = Pattern.compile("[ ,.!]");
+
+        double average = usersContents.stream()
+                .map(UserContent::getUserComment)
+                .mapToInt(comment -> pat.split(comment).length)  This code will add spaces after , as the elements of array
+                .average()                                       so the result of an average will be incorect.
+                .getAsDouble();
+
+        System.out.println("Average words per comment " + average);*/
+
+        /*String[] array = usersContents.stream()
+                .map(UserContent::getUserComment)
+                .flatMap(c -> pat.splitAsStream(c))
+                .filter(word -> !word.trim().isEmpty())
+                .toArray(String[]::new);
+
+        for (String s: array) {
+            System.out.println(s);
+        }
+
+        System.out.println(array.length);
+        System.out.println(array.length/20);*/
+
+/*        usersContents.stream()
+                .map(UserContent::getUserComment)
+                .flatMap(c -> pat.splitAsStream(c))
+                .filter(word -> !word.trim().isEmpty())
+                .toArray(String[]::new).length
+                        .average();
+
+        System.out.println("Average words per comment " + average);*/
+
+//Show comments that have with at least one word starting with "s".
+
+        /*Pattern pattern = Pattern.compile("\\b[sS]\\w*");
+
+
+        usersContents.stream()
+                .map(UserContent::getUserComment)
+                .filter(c -> pattern.matcher(c).find())
+                .collect(Collectors.toList())
+                .forEach(System.out::println);*/
+
+//Show comments of users whose names contains "a" (regardless of its case)
+
+        /*usersContents.stream()
+                .filter(userContent -> userContent.getUsername().toLowerCase().contains("a"))
+                .map(u -> u.getUsername() + " " + u.getUserComment())
+                .forEach(System.out::println);*/
+
+//Sort comments by length and select first 5.
+
+/*        usersContents.stream()
+                .map(UserContent::getUserComment)
+                .sorted(Comparator.comparingInt(String::length).reversed())
+                .limit(5)
+                .forEach(System.out::println);*/
+
+//
     }
 }
