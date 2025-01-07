@@ -6,6 +6,9 @@ public class Car {
     private boolean is4x4;
     private double fuelConsumptionPer100km;
 
+    public Car() {
+    }
+
     public Car(String make, int doorNumber, boolean is4x4, double fuelConsumptionPer100km) {
         this.make = make;
         this.doorNumber = doorNumber;
