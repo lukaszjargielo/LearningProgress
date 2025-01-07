@@ -1,0 +1,26 @@
+[
+  {
+    "make": "Audi",
+    "doorNumber": 5,
+    "is4x4": true,
+    "fuelConsumptionPer100km": 10.2
+  },
+  {
+    "make": "VW",
+    "doorNumber": 3,
+    "is4x4": false,
+    "fuelConsumptionPer100km": 6.5
+  },
+  {
+    "make": "Kia",
+    "doorNumber": 5,
+    "is4x4": true,
+    "fuelConsumptionPer100km": 12.7
+  },
+  {
+    "make": "BMW",
+    "doorNumber": 3,
+    "is4x4": false,
+    "fuelConsumptionPer100km": 8.1
+  }
+]
