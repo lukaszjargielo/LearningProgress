@@ -1,10 +1,13 @@
 package pl.futurejava;
 
-import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -26,7 +29,7 @@ public class Main {
 
         System.out.println(guavaCountriesAndCapitals.inverse().get("Berlin"))*/;
 
-        List<String> names = new ArrayList<>();
+        /*List<String> names = new ArrayList<>();
         names.add("Lucas");
         names.add("Mark");
         names.add(null);
@@ -39,7 +42,19 @@ public class Main {
         System.out.println(joinedNamesGuava);
 
         String joinedWithDefault = Joiner.on("; ").useForNull("default value").join(names);
-        System.out.println(joinedWithDefault);
+        System.out.println(joinedWithDefault);*/
+
+        String longText = ", Lucas,Mark,,Robert ,";
+        String[] split = longText.split(",");
+        List<String> names = Arrays.asList(split);
+
+        System.out.println(names);
+
+        List<String> splittedStrings = Splitter.on(",").omitEmptyStrings().splitToList(longText);
+        System.out.println(splittedStrings);
+
+        List<String> splittedstrings2 = Splitter.on(",").omitEmptyStrings().trimResults().splitToList(longText);
+        System.out.println(splittedstrings2);
     }
 
     /*private static String getCountry(String capital) {
