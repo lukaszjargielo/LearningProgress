@@ -1,5 +1,6 @@
 package pl.futurejava;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -44,7 +45,7 @@ public class Main {
         String joinedWithDefault = Joiner.on("; ").useForNull("default value").join(names);
         System.out.println(joinedWithDefault);*/
 
-        String longText = ", Lucas,Mark,,Robert ,";
+       /* String longText = ", Lucas,Mark,,Robert ,";
         String[] split = longText.split(",");
         List<String> names = Arrays.asList(split);
 
@@ -54,7 +55,16 @@ public class Main {
         System.out.println(splittedStrings);
 
         List<String> splittedstrings2 = Splitter.on(",").omitEmptyStrings().trimResults().splitToList(longText);
-        System.out.println(splittedstrings2);
+        System.out.println(splittedstrings2);*/
+
+        /*System.out.println(nonFailFastDivideMethod(2,0));
+        System.out.println(failFastDivideMethod(2, 0));
+        System.out.println(guavaFailFastDivideMethod(2, 0));*/
+
+        /*System.out.println(nonFailFastTransformWordMethod("  lucas    "));
+        System.out.println(nonFailFastTransformWordMethod(null));
+        System.out.println(FailFastTransformWordMethod(null));
+        System.out.println(guavaFailFastTransformWordMethod(null));*/
     }
 
     /*private static String getCountry(String capital) {
@@ -65,4 +75,49 @@ public class Main {
         }
         return null;
     }*/
+
+    private static int nonFailFastDivideMethod(int a, int b) {
+        System.out.println("Method intermediate processes");
+
+        return a / b;
+    }
+
+    private static int failFastDivideMethod(int a, int b) {
+        if (b == 0) {
+            throw new RuntimeException("Divider should be different from zero!");
+        }
+        System.out.println("Method intermediate processes");
+
+        return a / b;
+    }
+
+    private static int guavaFailFastDivideMethod(int a, int b) {
+        Preconditions.checkArgument(b != 0, "Divider should be different from zero!");
+
+        System.out.println("Method intermediate processes");
+
+        return a / b;
+    }
+
+    private static String nonFailFastTransformWordMethod(String s) {
+        StringBuilder newStringBuilderObject = new StringBuilder("New StringBuilderObject");
+        System.out.println(newStringBuilderObject.toString());
+        return s.toUpperCase().trim();
+    }
+
+    private static String FailFastTransformWordMethod(String s) {
+        if (s == null) {
+            throw new RuntimeException("Passed argument is null!");
+        }
+        StringBuilder newStringBuilderObject = new StringBuilder("New StringBuilderObject");
+        System.out.println(newStringBuilderObject.toString());
+        return s.toUpperCase().trim();
+    }
+
+    private static String guavaFailFastTransformWordMethod(String s) {
+        Preconditions.checkNotNull(s , "Passed argument should be different from null!");
+        StringBuilder newStringBuilderObject = new StringBuilder("New StringBuilderObject");
+        System.out.println(newStringBuilderObject.toString());
+        return s.toUpperCase().trim();
+    }
 }
