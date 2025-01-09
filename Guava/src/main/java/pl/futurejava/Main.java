@@ -4,6 +4,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.MapDifference;
+import com.google.common.collect.Maps;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -65,6 +67,36 @@ public class Main {
         System.out.println(nonFailFastTransformWordMethod(null));
         System.out.println(FailFastTransformWordMethod(null));
         System.out.println(guavaFailFastTransformWordMethod(null));*/
+
+        Map<String, String> map1 = new HashMap<>();
+        Map<String, String> map2 = new HashMap<>();
+
+        map1.put("Poland", "Warsaw");
+        map1.put("Germany", "Berlin");
+        map1.put("France", "Paris");
+
+        map2.put("Poland", "Cracow");
+        map2.put("France", "Paris");
+        map2.put("Czech Republic", "Prague");
+        map2.put("Slovakia", "Bratislava");
+        map2.put("Deutschland", "Berlin");
+
+        MapDifference<String, String> difference = Maps.difference(map1, map2);
+
+        Map<String, MapDifference.ValueDifference<String>> differing = difference.entriesDiffering();
+        System.out.println(differing);
+
+        Map<String, String> inCommon = difference.entriesInCommon();
+        System.out.println(inCommon);
+
+        Map<String, String> onlyMap1 = difference.entriesOnlyOnLeft();
+        System.out.println(onlyMap1);
+
+        Map<String, String> onlyMap2 = difference.entriesOnlyOnRight();
+        System.out.println(onlyMap2);
+
+
+
     }
 
     /*private static String getCountry(String capital) {
