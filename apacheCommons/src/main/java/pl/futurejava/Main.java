@@ -1,11 +1,10 @@
 package pl.futurejava;
 
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.TreeBidiMap;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.StringSubstitutor;
-import org.apache.commons.text.WordUtils;
 
 import java.util.Map;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -32,7 +31,7 @@ public class Main {
         //blank - null || "" || " " || "        "
         //empty - null || ""
 
-        System.out.println(StringUtils.isBlank(null));
+        /*System.out.println(StringUtils.isBlank(null));
         System.out.println(StringUtils.isBlank(""));
         System.out.println(StringUtils.isBlank("   "));
         System.out.println(StringUtils.isBlank("            "));
@@ -44,10 +43,21 @@ public class Main {
         System.out.println(StringUtils.isEmpty(" "));
         System.out.println(StringUtils.isEmpty("        "));
 
-        System.out.println(StringUtils.defaultString(getName(), "default value"));
+        System.out.println(StringUtils.defaultString(getName(), "default value"));*/
+
+        BidiMap<String, String> map = new TreeBidiMap<>();
+        map.put("Cat", "fish");
+        map.put("Dog", "meat");
+        map.put("Rat", "cheese");
+
+        System.out.println(map.get("Cat"));
+        System.out.println(map.getKey("meat"));
+        BidiMap<String, String> inversedBidiMap = map.inverseBidiMap();
+        System.out.println(inversedBidiMap);
+
     }
 
-     private static String getName() {
+    /*private static String getName() {
         return null;
-     }
+    }*/
 }
