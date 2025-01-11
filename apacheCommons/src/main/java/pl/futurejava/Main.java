@@ -1,6 +1,8 @@
 package pl.futurejava;
 
+import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bidimap.TreeBidiMap;
 import org.apache.commons.lang3.StringUtils;
 
@@ -45,7 +47,7 @@ public class Main {
 
         System.out.println(StringUtils.defaultString(getName(), "default value"));*/
 
-        BidiMap<String, String> map = new TreeBidiMap<>();
+        /*BidiMap<String, String> map = new TreeBidiMap<>();
         map.put("Cat", "fish");
         map.put("Dog", "meat");
         map.put("Rat", "cheese");
@@ -53,8 +55,23 @@ public class Main {
         System.out.println(map.get("Cat"));
         System.out.println(map.getKey("meat"));
         BidiMap<String, String> inversedBidiMap = map.inverseBidiMap();
-        System.out.println(inversedBidiMap);
+        System.out.println(inversedBidiMap);*/
 
+        Bag<String> guests = new HashBag<>();
+        guests.add("Anne", 3);
+        guests.add("Lucas", 2);
+        System.out.println(guests);
+
+        guests.forEach(System.out::println);
+        System.out.println();
+
+        guests.remove("Anne", 2);
+        guests.forEach(System.out::println);
+        System.out.println(guests.getCount("Lucas"));
+
+        System.out.println();
+
+        guests.uniqueSet().forEach(System.out::println);
     }
 
     /*private static String getName() {
