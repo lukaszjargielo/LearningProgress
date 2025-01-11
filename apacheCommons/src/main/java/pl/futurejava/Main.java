@@ -2,8 +2,11 @@ package pl.futurejava;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bidimap.TreeBidiMap;
+import org.apache.commons.collections4.map.LinkedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
@@ -57,7 +60,7 @@ public class Main {
         BidiMap<String, String> inversedBidiMap = map.inverseBidiMap();
         System.out.println(inversedBidiMap);*/
 
-        Bag<String> guests = new HashBag<>();
+        /*Bag<String> guests = new HashBag<>();
         guests.add("Anne", 3);
         guests.add("Lucas", 2);
         System.out.println(guests);
@@ -71,7 +74,17 @@ public class Main {
 
         System.out.println();
 
-        guests.uniqueSet().forEach(System.out::println);
+        guests.uniqueSet().forEach(System.out::println);*/
+
+        OrderedMap<String, String> map = new LinkedMap<>();
+        map.put("Poland", "Warsaw");
+        map.put("Germany", "Berlin");
+        map.put("France", "Paris");
+
+        System.out.println(map.firstKey());
+        System.out.println(map.nextKey("Poland"));
+        System.out.println(map.lastKey());
+        System.out.println(map.previousKey("France"));
     }
 
     /*private static String getName() {
