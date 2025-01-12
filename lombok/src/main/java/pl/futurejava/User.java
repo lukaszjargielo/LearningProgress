@@ -7,13 +7,13 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 //@RequiredArgsConstructor
+@Value
+public class User extends BaseClassForUser {
 
-public class User {
-
-   @NonNull private String name;
-   private int age;
+   String name;
+   int age;
 
 
 }
