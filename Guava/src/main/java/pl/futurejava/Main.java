@@ -1,5 +1,6 @@
 package pl.futurejava;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.BiMap;
@@ -71,6 +72,8 @@ public class Main {
         Map<String, String> map1 = new HashMap<>();
         Map<String, String> map2 = new HashMap<>();
 
+
+
         map1.put("Poland", "Warsaw");
         map1.put("Germany", "Berlin");
         map1.put("France", "Paris");
@@ -80,6 +83,8 @@ public class Main {
         map2.put("Czech Republic", "Prague");
         map2.put("Slovakia", "Bratislava");
         map2.put("Deutschland", "Berlin");
+
+        System.out.println(mapToStringConverter(map2));
 
         MapDifference<String, String> difference = Maps.difference(map1, map2);
 
@@ -151,5 +156,13 @@ public class Main {
         StringBuilder newStringBuilderObject = new StringBuilder("New StringBuilderObject");
         System.out.println(newStringBuilderObject.toString());
         return s.toUpperCase().trim();
+    }
+
+    public static String mapToStringConverter(Map<String, String> map) {
+        Map <String, String> myMap = Maps.newLinkedHashMap(map);
+        String delimiter = " & ";
+        String separator = " = ";
+        String result = Joiner.on(delimiter).withKeyValueSeparator(separator).join(myMap);
+        return result;
     }
 }
