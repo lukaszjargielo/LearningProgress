@@ -5,14 +5,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DatabaseConnection {
-    @Value("localhost")
-    private String host;
+    private final String host;
+    private final String username;
+    private final String password;
 
-    @Value("Lucas")
-    private String username;
-
-    @Value("Password")
-    private String password;
+    public DatabaseConnection(@Value("localhost") String host, @Value("Lucas") String username, @Value("Password") String password) {
+        this.host = host;
+        this.username = username;
+        this.password = password;
+    }
 
     public void addUserToDatabase(String username) {
         System.out.println("User has been added.");
