@@ -1,10 +1,15 @@
 package pl.futurejava;
 
 public class UserService {
+    private final DatabaseConnection databaseConnection;
 
-    //Example of tight coupling
+    //dependency injection as an example of loose coupling
+    public UserService(DatabaseConnection databaseConnection) {
+        this.databaseConnection = databaseConnection;
+    }
+
+
     public void registerUser(String username) {
-        DatabaseConnection databaseConnection = new DatabaseConnection("localhost", "Lucas", "Passwor");
         databaseConnection.addUserToDatabase(username);
     }
 }
