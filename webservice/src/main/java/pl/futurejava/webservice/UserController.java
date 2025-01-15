@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -22,22 +19,18 @@ public class UserController {
     public ResponseEntity<List<User>> getUsersList() throws IOException {
         Reader input = new FileReader("src/main/resources/users.csv");
 
-        /*CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
-                .setHeader("name", "age", "isMale")
-                .setSkipHeaderRecord(true)
-                .build();
-*/
         CSVFormat csvFormat = getCSVFormat();
 
         CSVParser parser = csvFormat.parse(input);
 
         List<User> users = parser.stream()
                 .map(record -> {
+                    int id = Integer.parseInt(record.get("id"));
                     String name = record.get("name");
                     int age = Integer.parseInt(record.get("age"));
                     boolean isMale = Boolean.parseBoolean(record.get("isMale"));
 
-                    return new User(name, age, isMale);
+                    return new User(id, name, age, isMale);
                 }).toList();
 
         return ResponseEntity.ok(users);
@@ -48,10 +41,15 @@ public class UserController {
         CSVFormat csvFormat = getCSVFormat();
 
         try (CSVPrinter printer = new CSVPrinter(new FileWriter("src/main/resources/users.csv", true), csvFormat)) {
-            printer.printRecord(user.name(), user.age(), user.isMale());
+            printer.printRecord(user.id(), user.name(), user.age(), user.isMale());
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PutMapping("users")
+    public ResponseEntity<User> updateUser(@RequestBody User newUser) {
+
     }
 
     private CSVFormat getCSVFormat() {

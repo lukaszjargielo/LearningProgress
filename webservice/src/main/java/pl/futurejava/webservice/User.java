@@ -1,4 +1,4 @@
 package pl.futurejava.webservice;
 
-public record User(String name, int age, boolean isMale) {
+public record User(int id, String name, int age, boolean isMale) {
 }
