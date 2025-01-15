@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 public class UserController {
     @GetMapping("users")
-    public ResponseEntity<String> getUsersList() throws IOException {
+    public ResponseEntity<List<User>> getUsersList() throws IOException {
         Reader input = new FileReader("src/main/resources/users.csv");
 
         /*CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
@@ -38,12 +38,10 @@ public class UserController {
 
                     return new User(name, age, isMale);
                 }).toList();
-        Gson gson = new Gson();
-        String usersJson = gson.toJson(users);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .header("Content-Type","application/json;charset = UTF-8")
-                .body(usersJson);
+                .body(users);
     }
 }
