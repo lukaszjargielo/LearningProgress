@@ -1,15 +1,17 @@
 package pl.futurejava.webservice;
 
-import com.google.gson.Gson;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
@@ -25,8 +27,7 @@ public class UserController {
                 .setSkipHeaderRecord(true)
                 .build();
 */
-        CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader("name", "age", "isMale")
-                .withSkipHeaderRecord();
+        CSVFormat csvFormat = getCSVFormat();
 
         CSVParser parser = csvFormat.parse(input);
 
@@ -40,5 +41,21 @@ public class UserController {
                 }).toList();
 
         return ResponseEntity.ok(users);
+    }
+
+    @PostMapping("users")
+    public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
+        CSVFormat csvFormat = getCSVFormat();
+
+        try (CSVPrinter printer = new CSVPrinter(new FileWriter("src/main/resources/users.csv", true), csvFormat)) {
+            printer.printRecord(user.name(), user.age(), user.isMale());
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    private CSVFormat getCSVFormat() {
+        return CSVFormat.DEFAULT.withHeader("name", "age", "isMale")
+                .withSkipHeaderRecord();
     }
 }
