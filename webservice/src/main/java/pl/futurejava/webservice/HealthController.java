@@ -10,16 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthController {
 
     @GetMapping("health")
-    public ResponseEntity<String> checkHealth() {
+    public ResponseEntity<ApplicationStatus> checkHealth() {
 
-        Gson gson = new Gson();
-        ApplicationStatus status = new ApplicationStatus(1);
-        String jsonStatus = gson.toJson(status);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .body(jsonStatus);
-
+        return ResponseEntity.ok(new ApplicationStatus(1));
     }
 }
