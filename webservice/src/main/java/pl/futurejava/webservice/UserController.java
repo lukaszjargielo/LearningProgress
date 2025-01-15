@@ -39,9 +39,6 @@ public class UserController {
                     return new User(name, age, isMale);
                 }).toList();
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .header("Content-Type","application/json;charset = UTF-8")
-                .body(users);
+        return ResponseEntity.ok(users);
     }
 }
