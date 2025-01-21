@@ -11,19 +11,96 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
 public class UserController {
+
     @GetMapping("users")
-    public ResponseEntity<List<User>> getUsersList() throws IOException {
+    public ResponseEntity<List<User>> getAllUsers() throws IOException {
+        List<User> users = getUsersFromFile();
+
+        return ResponseEntity.ok(users);
+    }
+
+    @PostMapping("users")
+    public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
+        List<User> users = getUsersFromFile();
+
+        int lastId = users.getLast().id();
+
+        CSVFormat csvFormat = getCSVFormat(true);
+
+        User newUser = new User(++lastId, user.name(), user.age(), user.isMale());
+
+        try (CSVPrinter printer = new CSVPrinter(new FileWriter("src/main/resources/users.csv", true), csvFormat)) {
+            printer.printRecord(newUser.id(), newUser.name(), newUser.age(), newUser.isMale());
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    }
+
+    @PutMapping("users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) throws IOException {
+        List<User> usersFromFile = getUsersFromFile();
+
+        List<User> newUsers = new ArrayList<>();
+        User updatedUser = null;
+
+        for (User userFromFile : usersFromFile) {
+            if (userFromFile.id() == id) {
+                updatedUser = new User(id, user.name(), user.age(), user.isMale());
+                newUsers.add(updatedUser);
+            } else {
+                newUsers.add(userFromFile);
+            }
+        }
+
+        CSVFormat csvFormat = getCSVFormat(false);
+
+        try (CSVPrinter printer = new CSVPrinter(new FileWriter("src/main/resources/users.csv"), csvFormat)) {
+            for (User newUser : newUsers) {
+                printer.printRecord(newUser.id(), newUser.name(), newUser.age(), newUser.isMale());
+            }
+        }
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping("users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable int id) throws IOException {
+        List<User> usersFromFile = getUsersFromFile();
+
+        List<User> users = new ArrayList<>(usersFromFile);
+
+        users.removeIf(user -> user.id() == id);
+
+        CSVFormat csvFormat = getCSVFormat(false);
+
+        try (CSVPrinter printer = new CSVPrinter(new FileWriter("src/main/resources/users.csv"), csvFormat)) {
+            for (User user : users) {
+                printer.printRecord(user.id(), user.name(), user.age(), user.isMale());
+            }
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+
+    private CSVFormat getCSVFormat(boolean withSkipHeaderRecord) {
+        return CSVFormat.DEFAULT
+                .withHeader("id", "name", "age", "isMale")
+                .withSkipHeaderRecord(withSkipHeaderRecord);
+    }
+
+    private List<User> getUsersFromFile() throws IOException {
         Reader input = new FileReader("src/main/resources/users.csv");
 
-        CSVFormat csvFormat = getCSVFormat();
+        CSVFormat csvFormat = getCSVFormat(true);
 
         CSVParser parser = csvFormat.parse(input);
 
-        List<User> users = parser.stream()
+        return parser.stream()
                 .map(record -> {
                     int id = Integer.parseInt(record.get("id"));
                     String name = record.get("name");
@@ -31,29 +108,9 @@ public class UserController {
                     boolean isMale = Boolean.parseBoolean(record.get("isMale"));
 
                     return new User(id, name, age, isMale);
-                }).toList();
-
-        return ResponseEntity.ok(users);
-    }
-
-    @PostMapping("users")
-    public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
-        CSVFormat csvFormat = getCSVFormat();
-
-        try (CSVPrinter printer = new CSVPrinter(new FileWriter("src/main/resources/users.csv", true), csvFormat)) {
-            printer.printRecord(user.id(), user.name(), user.age(), user.isMale());
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
-    }
-
-    @PutMapping("users")
-    public ResponseEntity<User> updateUser(@RequestBody User newUser) {
-
-    }
-
-    private CSVFormat getCSVFormat() {
-        return CSVFormat.DEFAULT.withHeader("name", "age", "isMale")
-                .withSkipHeaderRecord();
+                })
+                .sorted(Comparator.comparingInt(User::id))
+                .toList();
     }
 }
+
