@@ -1,0 +1,60 @@
+# Katalogi generowane przez systemy buildowe
+/target/
+/out/
+
+/# Katalogi generowane przez IDE
+/.idea/
+/*.iml
+/.project
+/.classpath
+/.settings/
+
+/# Eclipse
+/.eclipse/
+
+# Katalogi specyficzne dla IntelliJ IDEA
+/.idea/
+/*.iws
+/*.iml
+/*.ipr
+
+# Katalogi specyficzne dla NetBeans
+/nbproject/private/
+
+# Katalogi specyficzne dla Maven Wrapper
+/.mvn/
+
+# Zbiorcze pliki specyficzne dla systemu operacyjnego
+*.log
+*.bak
+*.swp
+*.swo
+
+# Pliki konfiguracyjne IDE, które nie powinny być śledzone
+/.vscode/
+/.idea/
+
+# Pliki i katalogi związane z systemem operacyjnym
+.DS_Store  # macOS
+Thumbs.db  # Windows
+
+# Zapisane pliki zależności lokalnych
+/.mvn/
+/target/
+
+# Spring Boot build-specific files
+# Spring Boot JAR/WAR files
+*.jar
+*.war
+
+# Konfiguracja Maven Wrappera
+/mvnw
+/mvnw.cmd
+
+# Pliki generowane przez buildy
+*.h2.db
+*.log
+
+# Pliki z zależnościami lokalnymi
+.idea/
+*.iml
