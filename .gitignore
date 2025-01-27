@@ -1,0 +1,50 @@
+# Wersja JDK (jeśli używasz wersji lokalnych JDK w projekcie)
+*.class
+*.jar
+*.war
+*.ear
+
+# Pliki generowane przez IDE (Eclipse, IntelliJ, NetBeans itp.)
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Pliki generowane przez Maven
+target/
+*.log
+
+# Pliki generowane przez Gradle
+build/
+
+# Pliki konfiguracyjne IDE
+/.settings/
+/.project
+/.classpath
+
+# Pliki konfiguracyjne Maven
+/.mvn/
+/mvnw
+/mvnw.cmd
+
+# Pliki konfiguracyjne Gradle
+/gradle/
+/gradlew
+/gradlew.bat
+
+# pliki tymczasowe IntelliJ IDEA
+out/
+
+# pliki środowiskowe
+.DS_Store
+Thumbs.db
+
+# Pliki zależności (np. pliki lokalne repozytoriów)
+.idea_modules/
+*.jar
+*.war
+*.ear
+
+# Wyjątkowo, jeśli masz pliki lokalne do konfiguracji
+*.env
