@@ -1,6 +1,7 @@
 package pl.futurejava.SpringBootAppRepeat;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,11 +20,9 @@ public class HealthCheckController {
     public ResponseEntity<ApplicationHealthStatus> healthCheck() {
 
         if (healthStatus.isHealthy()) {
-
-            return ResponseEntity.status(200).body(healthStatus);
+            return ResponseEntity.status(HttpStatus.OK).body(healthStatus);
         } else {
-
-            return ResponseEntity.status(503).body(healthStatus);
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(healthStatus);
         }
 
     }
