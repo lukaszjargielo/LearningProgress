@@ -1,6 +1,5 @@
 package pl.futurejava.SpringBootAppRepeat;
 
-import com.google.gson.Gson;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +15,7 @@ import java.util.List;
 public class UserController {
 
     @GetMapping("/users")
-    public ResponseEntity<String> getAllUsers() throws IOException {
-
+    public ResponseEntity<List<User>> getAllUsers() throws IOException {
 
         try (Reader input = new FileReader("SpringBootAppRepeat/src/main/resources/users.csv")) {
 
@@ -37,13 +35,8 @@ public class UserController {
                             return new User(name, age, isMale);
                         }).toList();
 
-                Gson gson = new Gson();
-                String usersJson = gson.toJson(users);
+                return ResponseEntity.ok(users);
 
-                return ResponseEntity
-                        .status(200)
-                        .header("Content-Type", "application/json;charset=UTF-8")
-                        .body(usersJson);
             }
         }
     }
