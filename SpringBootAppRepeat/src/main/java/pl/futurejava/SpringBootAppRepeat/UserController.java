@@ -44,16 +44,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
-    @PutMapping("users")
-    public ResponseEntity<User> updateUser(@RequestBody User user) throws IOException {
+    @PutMapping("users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) throws IOException {
 
         List<User> usersFromFile = getUsersFromFile();
         List<User> updatedUsers = new ArrayList<>();
         User updatedUser = null;
 
         for (User userFromFile : usersFromFile) {
-            if (userFromFile.id() == user.id()) {
-                updatedUser = new User(user.id(), user.name(), user.age(), user.isMale());
+            if (userFromFile.id() == id) {
+                updatedUser = new User(id, user.name(), user.age(), user.isMale());
                 updatedUsers.add(updatedUser);
             } else {
                 updatedUsers.add(userFromFile);
