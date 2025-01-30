@@ -132,10 +132,17 @@ public class UserController {
                 .withHeader()
                 .withColumnReordering(true);
 
-        MappingIterator<User> mappingIterator = mapper.readerFor(User.class)
-                .with(schema)
-                .readValue(new File(pathname));
+List<User> users = new ArrayList<>();
 
-        return mappingIterator.readAll();
+        try (MappingIterator<User> mappingIterator = mapper.readerFor(User.class)
+                .with(schema)
+                .readValue(new File(pathname))) {
+
+            while (mappingIterator.hasNext()) {
+                users.add(mappingIterator.next());
+            }
+
+            return users;
+        }
     }
 }
