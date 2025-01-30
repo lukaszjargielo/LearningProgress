@@ -1,7 +1,9 @@
-name,age,isMale
-Kamil,35,true
-Paulina,31,false
-Mariusz,25,true
-Dominik,27,true 
-Lucas,37,true
-Natalie,36,false
+id,name,age,isMale
+1,Kamil,35,true
+2,Paulina,31,false
+3,Paulina,20,false
+4,Dominik,27,true
+5,Lucas,37,true
+6,Natalie,36,false
+7,John,2,true
+8,Henry,68,true
