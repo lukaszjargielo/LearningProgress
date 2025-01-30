@@ -1,4 +1,10 @@
 package pl.futurejava.SpringBootAppRepeat;
 
-public record User(int id, String name, int age, boolean isMale) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record User(
+        @JsonProperty("id") int id,
+        @JsonProperty("name") String name,
+        @JsonProperty("age") int age,
+        @JsonProperty("isMale") boolean isMale) {
 }

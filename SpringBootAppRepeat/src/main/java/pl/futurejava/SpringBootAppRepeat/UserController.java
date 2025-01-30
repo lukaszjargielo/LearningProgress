@@ -1,5 +1,8 @@
 package pl.futurejava.SpringBootAppRepeat;
 
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import com.fasterxml.jackson.databind.MappingIterator;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -7,10 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -71,6 +72,25 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
     }
 
+    @DeleteMapping("users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable int id) throws IOException {
+        List<User> usersFromFile = getUsersFromFile();
+
+        List<User> users = new ArrayList<>(usersFromFile);
+
+        users.removeIf(user -> user.id() == id);
+
+        CSVFormat csvFormat = getCSVFormat(false);
+
+        try (CSVPrinter printer = new CSVPrinter(new FileWriter("SpringBootAppRepeat/src/main/resources/users.csv"), csvFormat)) {
+            for (User user : users) {
+                printer.printRecord(user.id(), user.name(), user.age(), user.isMale());
+            }
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+
     private CSVFormat getCSVFormat(boolean setSkipHeaderRecord) {
 
         return CSVFormat.DEFAULT.builder()
@@ -99,5 +119,23 @@ public class UserController {
                 return users;
             }
         }
+    }
+
+    private List<User> getUsersListFromFile (String pathname) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = CsvSchema.builder()
+                .addColumn("id")
+                .addColumn("name")
+                .addColumn("age")
+                .addColumn("isMale")
+                .build()
+                .withHeader()
+                .withColumnReordering(true);
+
+        MappingIterator<User> mappingIterator = mapper.readerFor(User.class)
+                .with(schema)
+                .readValue(new File(pathname));
+
+        return mappingIterator.readAll();
     }
 }
