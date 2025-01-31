@@ -34,7 +34,6 @@ public class UserController {
         List<User> users = getUsersListFromFile(PATH);
         User concreteUser = null;
 
-
         for (User user : users) {
             if (user.id() == id) {
                 concreteUser = user;
@@ -49,11 +48,30 @@ public class UserController {
         return ResponseEntity.ok(concreteUser);
     }
 
+//    @PostMapping("users")
+//    public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
+//
+//        List<User> users = getUsersListFromFile(PATH);
+//
+//        int lastId = users.getLast().id();
+//
+//        CSVFormat csvFormat = getCSVFormat(true);
+//
+//        User newUser = new User(lastId + 1, user.name(), user.age(), user.isMale());
+//
+//        try (CSVPrinter printer = new CSVPrinter(new FileWriter("SpringBootAppRepeat/src/main/resources/users.csv", true), csvFormat)) {
+//
+//            printer.printRecord(newUser.id(), newUser.name(), newUser.age(), newUser.isMale());
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+//    }
+
     @PostMapping("users")
-    public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
+    public ResponseEntity<?> addUser(@RequestBody User user) throws IOException {
 
         List<User> users = getUsersListFromFile(PATH);
-        ;
+        String URL = "http://localhost:8080/users/";
         int lastId = users.getLast().id();
 
         CSVFormat csvFormat = getCSVFormat(true);
@@ -65,14 +83,16 @@ public class UserController {
             printer.printRecord(newUser.id(), newUser.name(), newUser.age(), newUser.isMale());
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+        String link = URL.concat(String.valueOf(newUser.id()));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(link);
     }
 
     @PutMapping("users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) throws IOException {
 
         List<User> usersFromFile = getUsersListFromFile(PATH);
-        ;
+
         List<User> updatedUsers = new ArrayList<>();
         User updatedUser = null;
 
@@ -131,7 +151,6 @@ public class UserController {
     @DeleteMapping("users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable int id) throws IOException {
         List<User> usersFromFile = getUsersListFromFile(PATH);
-        ;
 
         List<User> users = new ArrayList<>(usersFromFile);
 
