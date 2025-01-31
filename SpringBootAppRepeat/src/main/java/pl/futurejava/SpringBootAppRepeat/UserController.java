@@ -1,8 +1,8 @@
 package pl.futurejava.SpringBootAppRepeat;
 
+import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import com.fasterxml.jackson.databind.MappingIterator;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -19,10 +18,12 @@ import java.util.List;
 @RestController
 public class UserController {
 
+    private static final String PATH = "SpringBootAppRepeat/src/main/resources/users.csv";
+
     @GetMapping("users")
     public ResponseEntity<List<User>> getAllUsers() throws IOException {
 
-        List<User> users = getUsersFromFile();
+        List<User> users = getUsersListFromFile(PATH);
 
         return ResponseEntity.ok(users);
     }
@@ -30,7 +31,8 @@ public class UserController {
     @PostMapping("users")
     public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
 
-        List<User> users = getUsersFromFile();
+        List<User> users = getUsersListFromFile(PATH);
+        ;
         int lastId = users.getLast().id();
 
         CSVFormat csvFormat = getCSVFormat(true);
@@ -48,7 +50,8 @@ public class UserController {
     @PutMapping("users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) throws IOException {
 
-        List<User> usersFromFile = getUsersFromFile();
+        List<User> usersFromFile = getUsersListFromFile(PATH);
+        ;
         List<User> updatedUsers = new ArrayList<>();
         User updatedUser = null;
 
@@ -63,8 +66,40 @@ public class UserController {
 
         CSVFormat csvFormat = getCSVFormat(false);
 
-        try (CSVPrinter printer = new CSVPrinter(new FileWriter("SpringBootAppRepeat/src/main/resources/users.csv"), csvFormat)) {
+        try (CSVPrinter printer = new CSVPrinter(new FileWriter(PATH), csvFormat)) {
             for (User newUser : updatedUsers) {
+                printer.printRecord(newUser.id(), newUser.name(), newUser.age(), newUser.isMale());
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+    }
+
+    @PatchMapping("users/{id}")
+    public ResponseEntity<User> updateUserPartially(@PathVariable int id, @RequestBody User user) throws IOException {
+        List<User> usersFromFile = getUsersListFromFile(PATH);
+
+        List<User> updatedUsers = new ArrayList<>();
+        User updatedUser = null;
+
+        for (User userFromFile : usersFromFile) {
+            if (userFromFile.id() == id) {
+                String updatedName = (user.name() != null) ? user.name() : userFromFile.name();
+                int updatedAge = (user.age() != 0) ? user.age() : userFromFile.age();
+                Boolean updatedIsMale = (user.isMale() != null) ? user.isMale() : userFromFile.isMale();
+                updatedUser = new User(id, updatedName, updatedAge, updatedIsMale);
+                usersFromFile.set(usersFromFile.indexOf(userFromFile), updatedUser);
+                break;
+            }
+        }
+
+        if (updatedUser == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        CSVFormat csvFormat = getCSVFormat(false);
+        try (CSVPrinter printer = new CSVPrinter(new FileWriter(PATH), csvFormat)) {
+            for (User newUser : usersFromFile) {
                 printer.printRecord(newUser.id(), newUser.name(), newUser.age(), newUser.isMale());
             }
         }
@@ -74,7 +109,8 @@ public class UserController {
 
     @DeleteMapping("users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable int id) throws IOException {
-        List<User> usersFromFile = getUsersFromFile();
+        List<User> usersFromFile = getUsersListFromFile(PATH);
+        ;
 
         List<User> users = new ArrayList<>(usersFromFile);
 
@@ -82,7 +118,7 @@ public class UserController {
 
         CSVFormat csvFormat = getCSVFormat(false);
 
-        try (CSVPrinter printer = new CSVPrinter(new FileWriter("SpringBootAppRepeat/src/main/resources/users.csv"), csvFormat)) {
+        try (CSVPrinter printer = new CSVPrinter(new FileWriter(PATH), csvFormat)) {
             for (User user : users) {
                 printer.printRecord(user.id(), user.name(), user.age(), user.isMale());
             }
@@ -100,7 +136,7 @@ public class UserController {
     }
 
     private List<User> getUsersFromFile() throws IOException {
-        try (Reader input = new FileReader("SpringBootAppRepeat/src/main/resources/users.csv")) {
+        try (Reader input = new FileReader(PATH)) {
 
             CSVFormat csvFormat = getCSVFormat(true );
 
@@ -136,7 +172,7 @@ List<User> users = new ArrayList<>();
 
         try (MappingIterator<User> mappingIterator = mapper.readerFor(User.class)
                 .with(schema)
-                .readValue(new File(pathname))) {
+                .readValues(new File(pathname))) {
 
             while (mappingIterator.hasNext()) {
                 users.add(mappingIterator.next());
@@ -146,3 +182,4 @@ List<User> users = new ArrayList<>();
         }
     }
 }
+

@@ -6,5 +6,5 @@ public record User(
         @JsonProperty("id") int id,
         @JsonProperty("name") String name,
         @JsonProperty("age") int age,
-        @JsonProperty("isMale") boolean isMale) {
+        @JsonProperty("isMale") Boolean isMale) {
 }
