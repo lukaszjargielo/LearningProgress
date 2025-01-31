@@ -28,6 +28,27 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("users/{id}")
+    public ResponseEntity<?> getSimpleUser(@PathVariable int id) throws IOException {
+
+        List<User> users = getUsersListFromFile(PATH);
+        User concreteUser = null;
+
+
+        for (User user : users) {
+            if (user.id() == id) {
+                concreteUser = user;
+                break;
+            }
+        }
+
+        if (concreteUser == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource does not exist");
+        }
+
+        return ResponseEntity.ok(concreteUser);
+    }
+
     @PostMapping("users")
     public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
 
