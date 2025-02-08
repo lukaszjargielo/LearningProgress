@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -23,15 +24,17 @@ public class SpringJdbcApplication {
 			System.out.println("Application works!");
 			String sqlInsert = "SELECT id, login, display_name, year_of_birth from user";
 
-			List<Map<String, Object>> rows = template.queryForList(sqlInsert);
+			List<User> users = template.query(sqlInsert, new BeanPropertyRowMapper<>(User.class));
 
-			for(var row : rows) {
-				System.out.println(row.get("id"));
-				System.out.println(row.get("login"));
-				System.out.println(row.get("display_name"));
-				System.out.println(row.get("year_of_birth"));
+			for (User user : users) {
+				System.out.println(user.getId());
+				System.out.println(user.getLogin());
+				System.out.println(user.getDisplayName());
+				System.out.println(user.getYearOfBirth());
 				System.out.println();
 			}
+
+
 		});
 	}
 }
