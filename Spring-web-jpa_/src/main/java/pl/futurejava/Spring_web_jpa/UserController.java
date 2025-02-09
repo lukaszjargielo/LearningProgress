@@ -1,13 +1,10 @@
 package pl.futurejava.Spring_web_jpa;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Contract;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -49,6 +46,20 @@ public class UserController {
                 .toUri();
 
         return ResponseEntity.created(location).body(user);
+    }
+
+    @PutMapping("users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
+        return userRepository.findById(id)
+                .map(existingUser -> {
+                    existingUser.setLogin(user.getLogin());
+                    existingUser.setDisplayName(user.getDisplayName());
+                    existingUser.setYearOfBirth(user.getYearOfBirth());
+
+                    return userRepository.save(existingUser);
+                })
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
