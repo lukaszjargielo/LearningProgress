@@ -39,13 +39,13 @@ public class UserController {
 
     @PostMapping("users")
     public ResponseEntity<User> addUser(@RequestBody User user) {
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(user.getId())
+                .buildAndExpand(savedUser   .getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(user);
+        return ResponseEntity.created(location).body(savedUser);
     }
 
     @PutMapping("users/{id}")
