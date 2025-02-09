@@ -62,5 +62,19 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PatchMapping("users/{id}")
+    public ResponseEntity<User> updateUserPartially(@PathVariable Integer id, @RequestBody User user) {
+        return userRepository.findById(id)
+                .map(existingUser -> {
+                    if (user.getLogin() != null) existingUser.setLogin(user.getLogin());
+                    if (user.getDisplayName() != null) existingUser.setDisplayName(user.getDisplayName());
+                    if (user.getYearOfBirth() != null) existingUser.setYearOfBirth(user.getYearOfBirth());
+
+                    return userRepository.save(existingUser);
+                })
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
 }
