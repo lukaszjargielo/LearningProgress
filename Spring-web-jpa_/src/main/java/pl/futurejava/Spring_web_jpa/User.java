@@ -1,9 +1,8 @@
 package pl.futurejava.Spring_web_jpa;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -13,6 +12,9 @@ public class User {
     private String login;
     private String displayName;
     private Integer yearOfBirth;
+
+    @OneToMany(mappedBy = "user")
+    List<Post> posts;
 
     public User() {
     }
