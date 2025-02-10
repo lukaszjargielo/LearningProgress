@@ -2,6 +2,7 @@ package pl.futurejava.Spring_web_jpa.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.futurejava.Spring_web_jpa.DTO.PostDTO;
 import pl.futurejava.Spring_web_jpa.entity.Post;
 import pl.futurejava.Spring_web_jpa.service.PostService;
 
@@ -15,12 +16,12 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<Post>> getAllPosts() {
+    public ResponseEntity<Iterable<PostDTO>> getAllPosts() {
         return postService.getAllPosts();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable Integer id) {
+    public ResponseEntity<PostDTO> getPostById(@PathVariable Integer id) {
         return postService.getPostById(id);
     }
 

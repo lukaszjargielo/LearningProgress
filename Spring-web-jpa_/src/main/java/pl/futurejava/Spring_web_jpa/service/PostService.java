@@ -3,11 +3,14 @@ package pl.futurejava.Spring_web_jpa.service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pl.futurejava.Spring_web_jpa.DTO.PostDTO;
+import pl.futurejava.Spring_web_jpa.DTO.UserDTO;
 import pl.futurejava.Spring_web_jpa.entity.Post;
 import pl.futurejava.Spring_web_jpa.repository.PostRepository;
 
 import java.net.URI;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 public class PostService {
@@ -17,16 +20,23 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public ResponseEntity<Iterable<Post>> getAllPosts() {
+    public ResponseEntity<Iterable<PostDTO>> getAllPosts() {
         Iterable<Post> posts = postRepository.findAll();
-
-        return ResponseEntity.ok(posts);
+        Iterable<PostDTO> postDTOs = StreamSupport.stream(posts.spliterator(), false)
+                .map(post -> new PostDTO(post.getId(), post.getBody(),
+                        new UserDTO(post.getUser().getId(), post.getUser().getDisplayName())))
+                .toList();
+        return ResponseEntity.ok(postDTOs);
     }
 
-    public ResponseEntity<Post> getPostById(Integer id) {
-        Optional<Post> post = postRepository.findById(id);
-        if (post.isPresent()) {
-            return ResponseEntity.ok(post.get());
+    public ResponseEntity<PostDTO> getPostById(Integer id) {
+        Optional<Post> optionalPost = postRepository.findById(id);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+
+            PostDTO postDTO = new PostDTO(post.getId(), post.getBody(),
+                    new UserDTO(post.getUser().getId(), post.getUser().getDisplayName()));
+            return ResponseEntity.ok(postDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
