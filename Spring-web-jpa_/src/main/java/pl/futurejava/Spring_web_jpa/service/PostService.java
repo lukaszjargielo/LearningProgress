@@ -1,29 +1,29 @@
-package pl.futurejava.Spring_web_jpa;
+package pl.futurejava.Spring_web_jpa.service;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pl.futurejava.Spring_web_jpa.entity.Post;
+import pl.futurejava.Spring_web_jpa.repository.PostRepository;
 
 import java.net.URI;
 import java.util.Optional;
 
-@RestController
-public class PostController {
+@Service
+public class PostService {
     private final PostRepository postRepository;
 
-    public PostController(PostRepository postRepository) {
+    public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
-    @GetMapping("posts")
     public ResponseEntity<Iterable<Post>> getAllPosts() {
         Iterable<Post> posts = postRepository.findAll();
 
         return ResponseEntity.ok(posts);
     }
 
-    @GetMapping("posts/{id}")
-    public ResponseEntity<Post> getPost(@PathVariable Integer id) {
+    public ResponseEntity<Post> getPostById(Integer id) {
         Optional<Post> post = postRepository.findById(id);
         if (post.isPresent()) {
             return ResponseEntity.ok(post.get());
@@ -32,8 +32,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("posts")
-    public ResponseEntity<Post> addPost(@RequestBody Post post) {
+    public ResponseEntity<Post> addPost(Post post) {
         Post savedPost = postRepository.save(post);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -43,8 +42,7 @@ public class PostController {
         return ResponseEntity.created(location).body(savedPost);
     }
 
-    @PatchMapping("posts/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Integer id, @RequestBody Post post) {
+    public ResponseEntity<Post> updateBodyPost(Integer id, Post post) {
         return postRepository.findById(id)
                 .map(existingPost -> {
                     existingPost.setBody(post.getBody());
@@ -53,5 +51,14 @@ public class PostController {
                 })
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    public ResponseEntity<Void> deletePost(Integer id) {
+        if (postRepository.existsById(id)) {
+            postRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package pl.futurejava.Spring_web_jpa;
+package pl.futurejava.Spring_web_jpa.entity;
 
 import jakarta.persistence.*;
 
