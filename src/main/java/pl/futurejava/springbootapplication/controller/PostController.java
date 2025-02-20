@@ -10,23 +10,23 @@ import pl.futurejava.springbootapplication.service.PostService;
 
 import java.util.List;
 
-
+@RequiredArgsConstructor
 @RestController
 public class PostController {
 
     private final PostService postService;
 
-    public PostController(PostService postService) {
+  /*  public PostController(PostService postService) {
         this.postService = postService;
-    }
+    }*/
 
     @GetMapping("/posts")
     public List<Post> getPosts() {
         return postService.getPosts();
     }
 
-    @GetMapping("/posts/{id}")
+    /*@GetMapping("/posts/{id}")
     public Post getSinglePost(@PathVariable long id) {
-        throw new IllegalArgumentException("Not implemented yet!");
-    }
+        return postService.getSinglePost(id);
+    }*/
 }
