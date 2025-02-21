@@ -11,16 +11,16 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-/*    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }*/
-
     public List<Post> getPosts() {
         return postRepository.findAll();
     }
 
-  /*  public <Post> getSinglePost(long id) {
-         return postRepository.findById(id).get();
+    public Post getSinglePost(long id) {
+        return postRepository.findById(id)
+                .orElseThrow();
+    }
 
-    }*/
+    public List<Post> getPostsByTitle(String title) {
+        return postRepository.findAllByTitleContainingIgnoreCase(title);
+    }
 }
