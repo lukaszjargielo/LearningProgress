@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("SELECT p FROM Post p LEFT JOIN fetch p.comment")
+    @Query("SELECT p FROM Post p")
     List<Post> findAllPosts(Pageable page);
 
     List<Post> findByTitleContainingIgnoreCase(String title);
