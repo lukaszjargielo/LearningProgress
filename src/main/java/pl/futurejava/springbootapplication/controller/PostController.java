@@ -19,15 +19,17 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/posts")
-    public List<PostDto> getPosts(@RequestParam(required = false) int page, Sort.Direction sort) {
-        int pageNumber = page > 0 ? page : 1;
-        return PostDtoMapper.mapToPostDtos(postService.getPosts(pageNumber - 1, sort));
+    public List<PostDto> getPosts(@RequestParam(required = false) Integer page, @RequestParam(required = false)Sort.Direction sort) {
+        int pageNumber = page != null && page > 0 ? page : 1;
+        Sort.Direction sortDirection = sort != null ? sort : Sort.Direction.ASC;
+        return PostDtoMapper.mapToPostDtos(postService.getPosts(pageNumber - 1, sortDirection));
     }
 
     @GetMapping("/posts/comments")
-    public List<Post> getPostsWithComments(@RequestParam(required = false) int page, Sort.Direction sort) {
-        int pageNumber = page > 0 ? page : 1;
-        return postService.getPostsWithComments(pageNumber - 1, sort);
+    public List<Post> getPostsWithComments(@RequestParam(required = false) Integer page, @RequestParam(required = false)Sort.Direction sort) {
+        int pageNumber = page != null && page > 0 ? page : 1;
+        Sort.Direction sortDirection = sort != null ? sort : Sort.Direction.ASC;
+        return postService.getPostsWithComments(pageNumber - 1, sortDirection);
     }
 
     @GetMapping("/posts/{id}")
