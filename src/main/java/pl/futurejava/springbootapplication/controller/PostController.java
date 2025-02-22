@@ -10,7 +10,6 @@ import pl.futurejava.springbootapplication.model.Post;
 import pl.futurejava.springbootapplication.service.PostService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,9 +20,14 @@ public class PostController {
     @GetMapping("/posts")
     public List<PostDto> getPosts(@RequestParam(required = false) int page) {
         int pageNumber = page > 0 ? page : 1;
-        return PostDtoMapper.maptoPostDtos(postService.getPosts(pageNumber - 1));
+        return PostDtoMapper.mapToPostDtos(postService.getPosts(pageNumber - 1));
     }
 
+    @GetMapping("/posts/comments")
+    public List<Post> getPostsWithComments(@RequestParam(required = false) int page) {
+        int pageNumber = page > 0 ? page : 1;
+        return postService.getPostsWithComments(pageNumber - 1);
+    }
 
 
     @GetMapping("/posts/{id}")
