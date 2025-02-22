@@ -29,7 +29,6 @@ public class PostController {
         return postService.getPostsWithComments(pageNumber - 1);
     }
 
-
     @GetMapping("/posts/{id}")
     public Post getSinglePost(@PathVariable long id) {
         return postService.getSinglePost(id);

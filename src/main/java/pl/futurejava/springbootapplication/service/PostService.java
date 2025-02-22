@@ -2,6 +2,7 @@ package pl.futurejava.springbootapplication.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.futurejava.springbootapplication.model.Comment;
 import pl.futurejava.springbootapplication.model.Post;
@@ -19,7 +20,7 @@ public class PostService {
     private final CommentRepository commentRepository;
 
     public List<Post> getPosts(int page) {
-        return postRepository.findAllPosts(PageRequest.of(page,PAGE_SIZE));
+        return postRepository.findAllPosts(PageRequest.of(page,PAGE_SIZE, Sort.by(Sort.Order.asc("id"), Sort.Order.asc("created"))));
     }
 
 

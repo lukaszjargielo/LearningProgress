@@ -2,7 +2,6 @@ package pl.futurejava.springbootapplication.controller;
 
 import pl.futurejava.springbootapplication.controller.dto.PostDto;
 import pl.futurejava.springbootapplication.model.Post;
-
 import java.util.List;
 
 public class PostDtoMapper {
