@@ -19,8 +19,8 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
-    public List<Post> getPosts(int page) {
-        return postRepository.findAllPosts(PageRequest.of(page,PAGE_SIZE, Sort.by(Sort.Order.asc("id"), Sort.Order.asc("created"))));
+    public List<Post> getPosts(int page, Sort.Direction sort) {
+        return postRepository.findAllPosts(PageRequest.of(page,PAGE_SIZE, Sort.by(sort, "id")));
     }
 
 
@@ -33,8 +33,8 @@ public class PostService {
         return postRepository.findByTitleContainingIgnoreCase(title);
     }
 
-    public List<Post> getPostsWithComments(int page) {
-        List<Post> allPosts = postRepository.findAllPosts(PageRequest.of(page, PAGE_SIZE));
+    public List<Post> getPostsWithComments(int page, Sort.Direction sort) {
+        List<Post> allPosts = postRepository.findAllPosts(PageRequest.of(page, PAGE_SIZE, Sort.by(sort, "id")));
         List<Long> ids = allPosts.stream()
                 .map(Post::getId)
                 .toList();
