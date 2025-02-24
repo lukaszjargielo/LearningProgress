@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class PostDto {
+public class PostDTO {
     private long id;
     private String title;
     private String content;

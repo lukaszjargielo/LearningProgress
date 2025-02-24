@@ -2,8 +2,11 @@ package pl.futurejava.springbootapplication.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.futurejava.springbootapplication.controller.dto.PostDto;
+import pl.futurejava.springbootapplication.controller.dto.PostDTO;
+import pl.futurejava.springbootapplication.model.Comment;
 import pl.futurejava.springbootapplication.model.Post;
 import pl.futurejava.springbootapplication.service.PostService;
 
@@ -11,47 +14,73 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/posts")
 public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("/posts")
-    public List<PostDto> getPosts(@RequestParam(required = false) Integer page, @RequestParam(required = false)Sort.Direction sort) {
-        int pageNumber = page != null && page > 0 ? page : 1;
-        Sort.Direction sortDirection = sort != null ? sort : Sort.Direction.ASC;
-        return PostDtoMapper.mapToPostDtos(postService.getPosts(pageNumber - 1, sortDirection));
+    //DZIAŁA
+    @GetMapping
+    public ResponseEntity<List<PostDTO>> getAllPosts(@RequestParam(required = false) Integer page, @RequestParam(required = false) Sort.Direction sort) {
+
+        return postService.getAllPosts(page, sort);
     }
 
-    @GetMapping("/posts/comments")
-    public List<Post> getPostsWithComments(@RequestParam(required = false) Integer page, @RequestParam(required = false)Sort.Direction sort) {
-        int pageNumber = page != null && page > 0 ? page : 1;
-        Sort.Direction sortDirection = sort != null ? sort : Sort.Direction.ASC;
-        return postService.getPostsWithComments(pageNumber - 1, sortDirection);
+    //DZIAŁA
+    @GetMapping("/comments")
+    public ResponseEntity<List<Post>> getPostsWithComments(@RequestParam(required = false) Integer page, @RequestParam(required = false) Sort.Direction sort) {
+
+        return postService.getPostsWithComments(page, sort);
     }
 
-    @GetMapping("/posts/{id}")
-    public Post getSinglePost(@PathVariable long id) {
-        return postService.getSinglePost(id);
+    //DZIAŁA
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> getSinglePostWithComments(@PathVariable Long id) {
+
+        return postService.getSinglePostWithComments(id);
     }
 
-    @GetMapping("/posts/search")
-    public List<Post> getPostsByTitle(@RequestParam String title) {
+    @GetMapping("/search")
+    public ResponseEntity<List<Post>> getPostsByTitle(@RequestParam String title) {
+
         return postService.getPostsByTitle(title);
     }
 
-    @PostMapping("/posts")
-    public Post addPost(@RequestBody Post post) {
+    //DZIAŁA
+    @PostMapping
+    public ResponseEntity<Post> addPost(@RequestBody Post post) {
+
         return postService.addPost(post);
     }
 
-    @PutMapping("/posts")
-    public Post editPost(@RequestBody Post post) {
-        return postService.editPost(post);
+    @PostMapping("{id}/comments")
+    public ResponseEntity<Comment> addComment(@PathVariable Long id, @RequestBody Comment comment) {
+
+        return postService.addComment(id, comment);
     }
 
-    @DeleteMapping("/posts/{id}")
-    public void deletePost(@PathVariable long id) {
-        postService.deletePost(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<Post> editPost(@PathVariable Long id, @RequestBody Post post) {
+
+        postService.editPost(post);
+
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Post> partiallyEditPost(@PathVariable Long id, @RequestBody Post post) {
+        return postService.partiallyEditPost(id, post);
+    }
+
+    @PutMapping("/{id}/comments/{commentId}")
+    public ResponseEntity<Comment> editComment(@PathVariable Long commentId, @RequestBody Comment comment) {
+        return commentService.editComment
+    }
+
+    //DZIAŁA
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+
+        return postService.deletePost(id);
 
     }
 }
