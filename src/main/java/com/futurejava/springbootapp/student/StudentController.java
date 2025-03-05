@@ -1,5 +1,6 @@
 package com.futurejava.springbootapp.student;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.List;
 @RequestMapping("/api/v1/students")
 public class StudentController {
 
-    private StudentService service;
+    private final StudentService service;
 
-    public StudentController(StudentService service) {
+    public StudentController(@Qualifier("db") StudentService service) {
         this.service = service;
     }
 
